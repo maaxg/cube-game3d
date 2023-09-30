@@ -1,14 +1,55 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import Box from "./box";
 
-let renderer, scene, camera, cube;
+let renderer, scene, camera, cube, ground;
 
 function animate() {
   requestAnimationFrame(animate);
-
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  //  cube.position.y -= 0.01;
+  cube.update({ ground });
 
   renderer.render(scene, camera);
+}
+
+function createGround() {
+  ground = new Box({
+    width: 5,
+    height: 0.5,
+    depth: 10,
+    color: 0x0000ff,
+    position: {
+      x: 0,
+      y: -2,
+      z: 0,
+    },
+  });
+
+  ground.receiveShadow = true;
+
+  scene.add(ground);
+}
+
+function createCube() {
+  cube = new Box({
+    velocity: {
+      x: 0,
+      y: -0.01,
+      z: 0,
+    },
+  });
+  cube.castShadow = true;
+
+  scene.add(cube);
+}
+
+function initLight() {
+  const light = new THREE.DirectionalLight(0xffffff);
+  light.position.y = 3;
+  light.position.z = 1;
+  light.castShadow = true;
+
+  scene.add(light);
 }
 
 function init() {
@@ -22,17 +63,21 @@ function init() {
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+
   document.body.appendChild(renderer.domElement);
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const controls = new OrbitControls(camera, renderer.domElement);
 
-  cube = new THREE.Mesh(geometry, material);
+  initLight();
+  createGround();
+  createCube();
 
-  camera.position.z = 25;
+  camera.position.z = 5;
 
-  scene.add(cube, camera);
+  scene.add(camera, controls);
+
+  animate();
 }
 
 init();
-animate();
