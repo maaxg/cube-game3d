@@ -22,11 +22,9 @@ class Box extends THREE.Mesh {
     velocity = { x: 0, y: 0, z: 0 },
     position = { x: 0, y: 0, z: 0 },
     body = true,
+    geometry = new THREE.BoxGeometry(width, height, depth),
   }) {
-    super(
-      new THREE.BoxGeometry(width, height, depth),
-      new THREE.MeshStandardMaterial({ color })
-    );
+    super(geometry, new THREE.MeshStandardMaterial({ color }));
     this.width = width;
     this.height = height;
     this.depth = depth;

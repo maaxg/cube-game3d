@@ -1,12 +1,13 @@
 import * as THREE from "three";
+
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Box from "./box";
-
 let renderer, scene, camera, cube, ground;
 const enemies = [];
 let frames = 0;
 let spawnRate = 200;
 let animationId;
+
 function animate() {
   animationId = requestAnimationFrame(animate);
 
