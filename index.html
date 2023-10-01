@@ -8,10 +8,18 @@
       body {
         margin: 0;
       }
+      h1 {
+        display: none;
+        position: absolute;
+        color: red;
+        text-align: center;
+        overflow: hidden;
+      }
     </style>
     <title>Vite App</title>
   </head>
   <body>
+    <h1 id="gameover">Game over! Press F5 to try Again</h1>
     <script type="module" src="/box.js" defer></script>
     <script type="module" src="/game.js"></script>
   </body>

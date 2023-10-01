@@ -6,25 +6,30 @@ let renderer, scene, camera, cube, ground;
 const enemies = [];
 let frames = 0;
 let spawnRate = 200;
+let animationId;
 function animate() {
-  const animationId = requestAnimationFrame(animate);
+  animationId = requestAnimationFrame(animate);
 
   cube.movement();
   cube.update({ ground });
-  enemies.forEach((enemy) => {
-    enemy.update({ ground, enemy: true });
-    if (enemy.boxCollision({ box: cube, box1: enemy })) {
-      console.log("collide");
-      cancelAnimationFrame(animationId);
-    }
-  });
+  gameOver();
 
   frames++;
   createEnemy();
 
   renderer.render(scene, camera);
 }
+function gameOver() {
+  enemies.forEach((enemy) => {
+    enemy.update({ ground, enemy: true });
+    if (enemy.boxCollision({ box: cube, box1: enemy })) {
+      const text = document.getElementById("gameover");
+      text.style.display = "flex";
 
+      cancelAnimationFrame(animationId);
+    }
+  });
+}
 function createGround() {
   ground = new Box({
     width: 10,
