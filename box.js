@@ -45,7 +45,7 @@ class Box extends THREE.Mesh {
 
     if (keys.a.pressed) this.velocity.x = -0.05;
     if (keys.d.pressed) this.velocity.x = 0.05;
-    if (keys.space.pressed) this.velocity.y = 0.05;
+    if (keys.space.pressed) this.velocity.y = 0.08;
   }
 
   movementListener() {

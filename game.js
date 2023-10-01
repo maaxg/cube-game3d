@@ -36,7 +36,7 @@ function createGround() {
     width: 10,
     height: 0.5,
     depth: 50,
-    color: 0x0000ff,
+    color: "#0369a1",
     position: {
       x: 0,
       y: -2,
@@ -81,11 +81,12 @@ function createCube({
 
 function initLight() {
   const light = new THREE.DirectionalLight(0xffffff);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 2);
   light.position.y = 3;
   light.position.z = 1;
   light.castShadow = true;
 
-  scene.add(light);
+  scene.add(light, ambientLight);
 }
 
 function createEnemy() {
@@ -94,7 +95,7 @@ function createEnemy() {
     createCube({
       enemy: true,
       position: {
-        x: (Math.random() - 0.5) * 10,
+        x: (Math.random() - 0.5) * 12,
         y: 0,
         z: -20,
       },
@@ -116,7 +117,9 @@ function init() {
     1000
   );
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  camera.position.set(4.61, 2.74, 8);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
 
